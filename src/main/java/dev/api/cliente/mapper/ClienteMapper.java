@@ -4,6 +4,7 @@ import dev.api.cliente.dto.ClienteAtualizacaoDto;
 import dev.api.cliente.dto.ClienteCadastroDto;
 import dev.api.cliente.dto.ClienteDetalhesDto;
 import dev.api.cliente.model.Cliente;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -43,5 +44,9 @@ public class ClienteMapper {
 
     public List<ClienteDetalhesDto> paraListagemDto(List<Cliente> clientes) {
         return clientes.stream().map(this::paraDetalhesDto).collect(Collectors.toList());
+    }
+
+    public Page<ClienteDetalhesDto> paraListagemDto(Page<Cliente> clientes) {
+        return clientes.map(this::paraDetalhesDto);
     }
 }
