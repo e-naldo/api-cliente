@@ -8,12 +8,13 @@ import dev.api.cliente.model.Cliente;
 import dev.api.cliente.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/clientes")
@@ -56,9 +57,9 @@ public class ClienteController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping
-    public ResponseEntity<List<ClienteDetalhesDto>> buscarTodos() {
-        List<Cliente> clientes = service.buscarTodos();
+    @GetMapping //api/v1/clientes?page=1&size=10&sort=nome
+    public ResponseEntity<Page<ClienteDetalhesDto>> buscarTodos(Pageable pageable) {
+        Page<Cliente> clientes = service.buscarTodos(pageable);
 
         return ResponseEntity.ok(mapper.paraListagemDto(clientes));
     }

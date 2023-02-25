@@ -3,6 +3,8 @@ package dev.api.cliente.service;
 import dev.api.cliente.model.Cliente;
 import dev.api.cliente.repository.ClienteRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -45,6 +47,10 @@ public class ClienteService implements GenericService<Cliente> {
     @Override
     public List<Cliente> buscarTodos() {
         return repository.findAll();
+    }
+
+    public Page<Cliente> buscarTodos(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
