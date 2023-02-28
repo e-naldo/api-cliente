@@ -2,6 +2,7 @@ package dev.api.cliente.service;
 
 import dev.api.cliente.model.Cliente;
 import dev.api.cliente.repository.ClienteRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -26,7 +27,7 @@ public class ClienteService implements GenericService<Cliente> {
     @Override
     public Cliente atualizar(Cliente cliente) {
         Cliente clienteAtual = repository.findById(cliente.getId())
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
 
         clienteAtual.setNome(cliente.getNome());
         clienteAtual.setEmail(cliente.getEmail());
@@ -41,7 +42,7 @@ public class ClienteService implements GenericService<Cliente> {
     public Cliente buscarPorId(Long id) {
 
         return repository.findById(id)
-                .orElseThrow(RuntimeException::new);
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado"));
     }
 
     @Override
